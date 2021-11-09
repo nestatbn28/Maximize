@@ -38,3 +38,21 @@ END $$
 DELIMITER ;
 
 CALL masukan(NULL,NULL,NULL,1)
+
+
+CREATE TABLE mlm(
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	Nama VARCHAR(255) NOT NULL,
+	Alamat VARCHAR(255) NOT NULL,
+	notel VARCHAR(255) NOT NULL,
+	upline INT
+);
+
+CREATE OR REPLACE PROCEDURE masukan(nama VARCHAR(255),alamat VARCHAR(255),notels VARCHAR(255),uplines INT)
+BEGIN
+	IF ((SELECT COUNT(*) FROM mlm WHERE upline=uplines GROUP BY upline) >= 2 THEN
+		SELECT * FROM mlm GROUP BY upline HAVING COUNT(id)<2 ORDER BY id
+	ELSE 
+		INSERT INTO mlm(Nama,Alamat,notel,upline) VALUES (nama,alamat,notels,uplines)
+	END IF)
+END

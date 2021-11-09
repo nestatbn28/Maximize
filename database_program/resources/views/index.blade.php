@@ -15,7 +15,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($mlms as $ml)
+                                            @foreach($mlm as $ml)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$ml->Nama}}</td>
@@ -26,7 +26,5 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-
-
     </body>
 </html>

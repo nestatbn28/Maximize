@@ -11,7 +11,7 @@ class MlmController extends Controller
     public function index()
     {
         $mlm=Mlm::All();
-        return view('index',compact('mlm'));
+        return view('index',compact('mls'));
     }
 
     
@@ -32,7 +32,7 @@ class MlmController extends Controller
         $count = DB::table('mlm')->where(upline,'=',$request->upline)->groupBy('upline')->count();
         if (count>=2) {
             $mlm=DB::table('mlm')->groupBy('upline')->having(DB::raw('count(id)'), '<', 2)->orderBy('id')->get();
-            return view('/',compact('mlm'));
+            return view('index',compact('mlm'));
         } else {
             Mlm::create([
                 'Nama' => $request->Nama,
@@ -40,7 +40,7 @@ class MlmController extends Controller
                 'notel' => $request->notel,
                 'upline' => $request->upline,
             ]);
-            return redirect('/data');
+            return redirect('/');
         }
     }
 
@@ -53,6 +53,6 @@ class MlmController extends Controller
     public function show($id)
     {
         $mlm = Mlm::where('id','=',$id)->orWhere('Nama','=',$id)->orWhere('notel','=',$id)->get();
-        return view('/',compact('mlm'));
+        return view('index',compact('mlm'));
     }
 }
